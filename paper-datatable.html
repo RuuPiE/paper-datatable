@@ -284,7 +284,7 @@
 										<!-- </template> -->
 									</td>
 								</template>
-								<template id="cellRepeat" is="dom-repeat" items="{{_columns}}" as="column" on-dom-change="_restructureData">
+								<template id="cellRepeatMulti" is="dom-repeat" items="{{_columns}}" as="column" on-dom-change="_restructureData">
 									<td data-empty class="bound-cell" data-column="{{column}}" data-editable$="{{column.editable}}" data-edit-icon$="{{column.editIcon}}" on-tap="_cellTapped">
 										<div>
 											<span></span>
@@ -301,7 +301,7 @@
 										<paper-checkbox checked="[[_isRowSelected(rowKey, selectedKey)]]" on-change="_setSelection"></paper-checkbox>
 									</td>
 								</template>
-								<template id="cellRepeat" is="dom-repeat" items="{{_columns}}" as="column" on-dom-change="_restructureData">
+								<template id="cellRepeatSingle" is="dom-repeat" items="{{_columns}}" as="column" on-dom-change="_restructureData">
 									<td data-empty class="bound-cell" data-column="{{column}}" data-editable$="{{column.editable}}" data-edit-icon$="{{column.editIcon}}" on-tap="_cellTapped">
 										<div>
 											<span></span>
@@ -564,7 +564,9 @@ A [material design implementation of a data table](https://www.google.com/design
 					var cells = Polymer.dom(this.root).querySelectorAll('.bound-cell');
 					cells.forEach(this._resetCell.bind(this));
 					this.$.rowRepeat.render();
-					Polymer.dom(this.root).querySelectorAll('#cellRepeat').forEach((cr) => cr.render());
+					let cellRepeat = Polymer.dom(this.root)
+							.querySelector(`#cellRepeat${this.multiSelection ? 'Multi' : 'Single'}`)
+					cellRepeat.render()
 				},
 
 				_resetCell: function(cell){
